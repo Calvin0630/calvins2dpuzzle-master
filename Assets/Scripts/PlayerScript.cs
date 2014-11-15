@@ -60,13 +60,9 @@ public class PlayerScript : MonoBehaviour {
 
 							//instantiates black holes on mouse click
 						if (Input.GetMouseButtonDown (0)) {
-								float aspect = Screen.width / Screen.height;
-								Vector3 mouse = new Vector3 (Input.mousePosition.x, Input.mousePosition.y, 0);
-								Vector3 mousePos = Camera.main.ScreenToViewportPoint (mouse);
-								Vector3 mousePos1 = new Vector3 (2f * (mousePos.x - .5f), 2f * (mousePos.y - .5f));
-								Vector3 mouseUnit = new Vector3 (Camera.main.aspect * Camera.main.orthographicSize * mousePos1.x, Camera.main.orthographicSize * mousePos1.y);
+								
 								GameObject prefab = (GameObject)Resources.Load ("Sphere");
-								GameObject clone = (GameObject)Instantiate (prefab, mouseUnit, Quaternion.identity);
+				GameObject clone = (GameObject)Instantiate (prefab, getWorldMouseCoordinates(), Quaternion.identity);
 
 						}
 
@@ -87,9 +83,14 @@ public class PlayerScript : MonoBehaviour {
 			jumping2 = false;
 		}
 
-
-		
 	}
 	
-	
+	//methods
+	public Vector3 getWorldMouseCoordinates() {
+		Vector3 mouse = new Vector3 (Input.mousePosition.x, Input.mousePosition.y, 0);
+		Vector3 mousePos = Camera.main.ScreenToViewportPoint (mouse);
+		Vector3 mousePos1 = new Vector3 (2f * (mousePos.x - .5f), 2f * (mousePos.y - .5f));
+		Vector3 mouseUnit = new Vector3 (Camera.main.aspect * Camera.main.orthographicSize * mousePos1.x, Camera.main.orthographicSize * mousePos1.y);
+		return mouseUnit;
+	}
 }

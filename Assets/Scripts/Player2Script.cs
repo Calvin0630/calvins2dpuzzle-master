@@ -84,6 +84,6 @@ public class Player2Script : MonoBehaviour {
 		
 		
 	}
-	
-	
+
+
 }
