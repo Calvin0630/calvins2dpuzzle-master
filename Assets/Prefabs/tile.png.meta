@@ -1,8 +1,7 @@
 fileFormatVersion: 2
-guid: 11d9347a209b6c942999ec77d0a5180a
+guid: 9163594fc7e00a942bca3860e9e70339
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: walltexture.jpgf8e1ee5c-aa56-40f9-986a-a583fbad830bLarge
+  fileIDToRecycleName: {}
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -38,7 +37,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: .5, y: .5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 128
   alphaIsTransparency: 1
   textureType: 8
   buildTargetSettings: []

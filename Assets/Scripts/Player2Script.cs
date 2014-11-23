@@ -17,18 +17,7 @@ public class Player2Script : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if (Input.GetKeyDown (KeyCode.Tab) && playerMode == 0) {
-			playerMode = 1;
-				}
-		else if (Input.GetKeyDown (KeyCode.Tab) && playerMode == 1) {
-			playerMode = 0;
-		}
 
-
-
-
-
-		if (playerMode == 1) {
 		
 
 
@@ -62,7 +51,7 @@ public class Player2Script : MonoBehaviour {
 			}
 
 
-		}
+		
 		
 		
 

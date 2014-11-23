@@ -8,7 +8,7 @@ public class PlayerScript : MonoBehaviour {
 	bool jumping2 = false;
 	float distanceFromGround;
 	Vector3 mousePos;
-	int playerMode = 0;
+	int orbCount = 0;
 
 	//float cameraSize = Camera.main.orthographicSize;
 	// Use this for initialization
@@ -18,56 +18,51 @@ public class PlayerScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		//switches between player modes
-		if (Input.GetKeyDown(KeyCode.Tab) && playerMode == 0) {
-			playerMode = 1;
-				}
-		else if (Input.GetKeyDown (KeyCode.Tab) && playerMode == 1) {
-			playerMode = 0;
-
-		}
-
 
 
 
 		//contains all player controls
-		if (playerMode == 0)
-			{
+
 
 
 
 						//left and right movement
-						if (Input.GetKey (KeyCode.LeftArrow)) {
-								transform.position = Vector3.MoveTowards (transform.position, transform.position - new Vector3 (4f, 0, 0), Time.deltaTime * 4);
-								transform.localScale = new Vector3 (-7, 7, 1);
-			
-						} else if (Input.GetKey (KeyCode.RightArrow)) {
-								transform.position = Vector3.MoveTowards (transform.position, transform.position + new Vector3 (4f, 0, 0), Time.deltaTime * 4);
-								transform.localScale = new Vector3 (7, 7, 1);
-						}
+		if (Input.GetKey (KeyCode.LeftArrow)) {
+			transform.position = Vector3.MoveTowards (transform.position, transform.position - new Vector3 (4f, 0, 0), Time.deltaTime * 4);
+			transform.localScale = new Vector3 (-7, 7, 1);
 		
-
-						//controls for jumping
-						if (Input.GetKeyDown (KeyCode.UpArrow) && !jumping2) {
-								gameObject.rigidbody2D.AddForce (new Vector2 (0, 256.0f));
-								if (jumping1) {
-										jumping2 = true;
-								}
-								jumping1 = true;
-
-						}
+		} else if (Input.GetKey (KeyCode.RightArrow)) {
+			transform.position = Vector3.MoveTowards (transform.position, transform.position + new Vector3 (4f, 0, 0), Time.deltaTime * 4);
+			transform.localScale = new Vector3 (7, 7, 1);
+		}
 		
-
-							//instantiates black holes on mouse click
-						if (Input.GetMouseButtonDown (0)) {
-								
-								GameObject prefab = (GameObject)Resources.Load ("Sphere");
-				GameObject clone = (GameObject)Instantiate (prefab, getWorldMouseCoordinates(), Quaternion.identity);
-
-						}
-
+		//controls for jumping
+		if (Input.GetKeyDown (KeyCode.UpArrow) && !jumping2) {
+			gameObject.rigidbody2D.AddForce (new Vector2 (0, 256.0f));
+			if (jumping1) {
+				jumping2 = true;
+			}
+			jumping1 = true;
 
 		}
+		
+
+		//instantiates black holes on mouse click
+		if (Input.GetMouseButtonDown(0) && orbCount <= 5) {
+			GameObject prefab = (GameObject)Resources.Load ("Sphere");
+			GameObject clone = (GameObject)Instantiate (prefab, getWorldMouseCoordinates(), Quaternion.identity);
+			orbCount++;
+					
+		}
+
+
+		//control to delete black hole
+		if (Input.GetMouseButtonDown(1) && orbCount > 0) {
+
+		}
+		Debug.Log (Camera.main.aspect);
+
+
 	}
 	
 	void FixedUpdate(){
