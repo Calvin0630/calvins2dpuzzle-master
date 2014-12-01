@@ -9,7 +9,7 @@ public class PlayerScript : MonoBehaviour {
 	float distanceFromGround;
 	Vector3 mousePos;
 	int orbCount = 0;
-
+	GameObject[] blackHoles = new GameObject[5];
 	//float cameraSize = Camera.main.orthographicSize;
 	// Use this for initialization
 	void Start () {
@@ -30,8 +30,8 @@ public class PlayerScript : MonoBehaviour {
 		if (Input.GetKey (KeyCode.LeftArrow)) {
 			transform.position = Vector3.MoveTowards (transform.position, transform.position - new Vector3 (4f, 0, 0), Time.deltaTime * 4);
 			transform.localScale = new Vector3 (-7, 7, 1);
-		
-		} else if (Input.GetKey (KeyCode.RightArrow)) {
+		} 
+		else if (Input.GetKey (KeyCode.RightArrow)) {
 			transform.position = Vector3.MoveTowards (transform.position, transform.position + new Vector3 (4f, 0, 0), Time.deltaTime * 4);
 			transform.localScale = new Vector3 (7, 7, 1);
 		}
@@ -48,19 +48,25 @@ public class PlayerScript : MonoBehaviour {
 		
 
 		//instantiates black holes on mouse click
-		if (Input.GetMouseButtonDown(0) && orbCount <= 5) {
+		if (Input.GetMouseButtonDown(0) && orbCount < 5) {
 			GameObject prefab = (GameObject)Resources.Load ("Sphere");
 			GameObject clone = (GameObject)Instantiate (prefab, getWorldMouseCoordinates(), Quaternion.identity);
+			blackHoles[orbCount] = clone;
 			orbCount++;
 					
 		}
-
+		Debug.Log(orbCount);
 
 		//control to delete black hole
 		if (Input.GetMouseButtonDown(1) && orbCount > 0) {
-
+			Destroy(blackHoles[0]);                                      //uninstantiates first object in blackHoles array
+			for (int i=1;i<blackHoles.Length;i++) {
+				if (blackHoles[i] != null) {
+					blackHoles[i-1]=blackHoles[i];
+				}
+			}
+			orbCount = orbCount-1;
 		}
-		Debug.Log (Camera.main.aspect);
 
 
 	}
