@@ -10,7 +10,7 @@ public class PlayerScript : MonoBehaviour {
 	Vector3 mousePos;
 	int orbCount = 0;
 	GameObject[] blackHoles = new GameObject[5];
-	//float cameraSize = Camera.main.orthographicSize;
+
 	// Use this for initialization
 	void Start () {
 
@@ -55,17 +55,17 @@ public class PlayerScript : MonoBehaviour {
 			orbCount++;
 					
 		}
-		Debug.Log(orbCount);
 
 		//control to delete black hole
 		if (Input.GetMouseButtonDown(1) && orbCount > 0) {
-			Destroy(blackHoles[0]);                                      //uninstantiates first object in blackHoles array
-			for (int i=1;i<blackHoles.Length;i++) {
+
+			for (int i=blackHoles.Length-1;i>=0;i--) {
 				if (blackHoles[i] != null) {
-					blackHoles[i-1]=blackHoles[i];
+					Destroy(blackHoles[i]);
+					break;
 				}
 			}
-			orbCount = orbCount-1;
+			orbCount--;
 		}
 
 
@@ -94,4 +94,13 @@ public class PlayerScript : MonoBehaviour {
 		Vector3 mouseUnit = new Vector3 (Camera.main.aspect * Camera.main.orthographicSize * mousePos1.x, Camera.main.orthographicSize * mousePos1.y);
 		return mouseUnit;
 	}
+	/**public float distanceFromPlayer(Vector3 thing) {
+		float distance = 0;
+		float distanceX = (float) transform.position.x - thing.x;
+		float distanceY = (float) transform.position.y - thing.y;
+		distance = Mathf.Sqrt( distanceX + distanceY);
+		return distance;
+	}*/
+
+
 }

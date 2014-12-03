@@ -66,11 +66,12 @@ public class Player2Script : MonoBehaviour {
 			distanceFromGround = Mathf.Abs(hit.point.y - transform.position.y);
 		}
 
-		if (distanceFromGround <= 1.8f && jumping2 ){
+		if (distanceFromGround <= 1.9f && jumping2 ){
 			jumping1 = false;
 			jumping2 = false;
 		}
-		
+
+		Debug.Log(distanceFromGround);
 		
 	}
 
