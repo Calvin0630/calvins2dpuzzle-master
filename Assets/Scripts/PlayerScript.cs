@@ -84,6 +84,7 @@ public class PlayerScript : MonoBehaviour {
 			jumping2 = false;
 		}
 
+		Debug.Log (distanceFromPlayer(getWorldMouseCoordinates()).x + "  " + distanceFromPlayer(getWorldMouseCoordinates()).y );
 	}
 	
 	//methods
@@ -94,13 +95,12 @@ public class PlayerScript : MonoBehaviour {
 		Vector3 mouseUnit = new Vector3 (Camera.main.aspect * Camera.main.orthographicSize * mousePos1.x, Camera.main.orthographicSize * mousePos1.y);
 		return mouseUnit;
 	}
-	/**public float distanceFromPlayer(Vector3 thing) {
-		float distance = 0;
-		float distanceX = (float) transform.position.x - thing.x;
-		float distanceY = (float) transform.position.y - thing.y;
-		distance = Mathf.Sqrt( distanceX + distanceY);
+	public Vector2 distanceFromPlayer(Vector2 position) {
+		float differenceY = position.y - transform.position.y;
+		float differenceX = position.x - transform.position.x;
+		Vector2 distance = new Vector2 (differenceX, differenceY);
 		return distance;
-	}*/
+	}
 
 
 }
