@@ -27,17 +27,17 @@ public class PlayerScript : MonoBehaviour {
 
 
 						//left and right movement
-		if (Input.GetKey (KeyCode.LeftArrow)) {
+		if (Input.GetKey (KeyCode.A)) {
 			transform.position = Vector3.MoveTowards (transform.position, transform.position - new Vector3 (4f, 0, 0), Time.deltaTime * 4);
 			transform.localScale = new Vector3 (-7, 7, 1);
 		} 
-		else if (Input.GetKey (KeyCode.RightArrow)) {
+		else if (Input.GetKey (KeyCode.D)) {
 			transform.position = Vector3.MoveTowards (transform.position, transform.position + new Vector3 (4f, 0, 0), Time.deltaTime * 4);
 			transform.localScale = new Vector3 (7, 7, 1);
 		}
 		
 		//controls for jumping
-		if (Input.GetKeyDown (KeyCode.UpArrow) && !jumping2) {
+		if (Input.GetKeyDown (KeyCode.Space) && !jumping2) {
 			gameObject.rigidbody2D.AddForce (new Vector2 (0, 256.0f));
 			if (jumping1) {
 				jumping2 = true;
@@ -84,7 +84,7 @@ public class PlayerScript : MonoBehaviour {
 			jumping2 = false;
 		}
 
-		Debug.Log (distanceFromPlayer(getWorldMouseCoordinates()).x + "  " + distanceFromPlayer(getWorldMouseCoordinates()).y );
+
 	}
 	
 	//methods

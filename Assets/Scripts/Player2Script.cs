@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class Player2Script : MonoBehaviour {
@@ -7,8 +7,9 @@ public class Player2Script : MonoBehaviour {
 	bool jumping1 = false;
 	bool jumping2 = false;
 	float distanceFromGround;
-	int playerMode = 0;
-
+	float sprinting = 1;
+	public static float lightDelay = 150;
+	float lightTimer = lightDelay;
 	// Use this for initialization
 	void Start () {
 		
@@ -18,23 +19,19 @@ public class Player2Script : MonoBehaviour {
 	void Update () {
 
 
-		
 
+		if (Input.GetButton ("LJoystickButton")) {
+			sprinting = 2f;
+		} else {
+			sprinting = 1;		
+		}
 
-		//left and right movement
-		
-		if (  Input.GetKey(KeyCode.A) ) {
-			transform.position = Vector3.MoveTowards(transform.position, transform.position - new Vector3(4f,0,0), Time.deltaTime * 4);
-			transform.localScale = new Vector3(2,2,1);
+		transform.position = Vector3.MoveTowards(transform.position, transform.position + new Vector3(4f,0,0) * sprinting * Input.GetAxis("LX"), Time.deltaTime * 4);
 			
-		}
-		else if ( Input.GetKey(KeyCode.D) ) {
-			transform.position = Vector3.MoveTowards(transform.position, transform.position + new Vector3(4f,0,0), Time.deltaTime * 4);
-			transform.localScale = new Vector3(-2,2,1);
-		}
+
 		
 		//controls for jumping
-		if (Input.GetKeyDown(KeyCode.W) && !jumping2) {
+		if ( Input.GetButtonDown("A") && !jumping2) {
 			gameObject.rigidbody2D.AddForce(new Vector2(0,256.0f));
 				if (jumping1) {
 					jumping2 = true;
@@ -44,18 +41,17 @@ public class Player2Script : MonoBehaviour {
 			}
 
 
-			if (Input.GetMouseButtonDown(0)) {
-			
-			
-			
-			}
+
+		lightTimer += Time.time;
+		Debug.Log (lightTimer);
+		if (Input.GetButton ("RB") && ((Input.GetAxis ("RX") + Input.GetAxis ("RY") > 0) || (Input.GetAxis ("RX") + Input.GetAxis ("RY") < 0)) && lightTimer > lightDelay ) {
+			GameObject prefab = (GameObject)Resources.Load ("ballOfLight");
+			GameObject light = (GameObject)Instantiate (prefab, transform.position, Quaternion.identity);
+			light.rigidbody2D.AddForce (new Vector2(Input.GetAxis ("RX"), Input.GetAxis ("RY")));
+			lightTimer = 0;
+		}
 
 
-		
-		
-		
-
-		
 	}
 	
 	void FixedUpdate(){
@@ -71,9 +67,12 @@ public class Player2Script : MonoBehaviour {
 			jumping2 = false;
 		}
 
-		Debug.Log(distanceFromGround);
 		
 	}
 
+	public Vector2 setMagnitude(float magnitude, Vector2 vector) {
+		Vector2 result = new Vector2(0,0);
+		return result;
+	}
 
 }
