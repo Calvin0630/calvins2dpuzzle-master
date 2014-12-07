@@ -102,5 +102,10 @@ public class PlayerScript : MonoBehaviour {
 		return distance;
 	}
 
-
+	public Vector2 getDistance(Vector2 vector, Vector2 secondVector) {
+		float differenceY = Mathf.Abs(vector.y - secondVector.y);
+		float differenceX = Mathf.Abs(vector.x - secondVector.x);
+		Vector2 distance = new Vector2 (differenceX, differenceY);
+		return distance;
+	}
 }

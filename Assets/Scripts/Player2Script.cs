@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Player2Script : MonoBehaviour {
 	
@@ -8,8 +9,9 @@ public class Player2Script : MonoBehaviour {
 	bool jumping2 = false;
 	float distanceFromGround;
 	float sprinting = 1;
-	public static float lightDelay = 20;
+	public static float lightDelay = 5;
 	float lightTimer = lightDelay;
+	List<GameObject> lightList = new List<GameObject>();
 	// Use this for initialization
 	void Start () {
 		
@@ -49,12 +51,19 @@ public class Player2Script : MonoBehaviour {
 			GameObject light = (GameObject)Instantiate (prefab, transform.position, Quaternion.identity);
 			Vector2 direction = new Vector2(Input.GetAxis ("RX"), Input.GetAxis ("RY"));
 			light.rigidbody2D.AddForce (setMagnitude(.5f,direction));
+			lightList.Add (light);
 			lightTimer = 0;
 		}
 
-
-
-
+		//checks if light is off the screen. If so it despawns them.
+		if (lightList.Count != 0) {
+			for (int i=0;i < lightList.Count;i++) {
+				if (Mathf.Abs(lightList[i].transform.position.y)> Camera.main.orthographicSize || Mathf.Abs(lightList[i].transform.position.x)> Camera.main.orthographicSize * Camera.main.aspect) {
+					Destroy(lightList[i]);
+					lightList.RemoveAt(i);
+				}
+			}
+		}
 	}
 	
 	void FixedUpdate(){
