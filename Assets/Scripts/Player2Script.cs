@@ -11,7 +11,7 @@ public class Player2Script : MonoBehaviour {
 	float sprinting = 1;
 	public static float lightDelay = 5;
 	float lightTimer = lightDelay;
-	List<GameObject> lightList = new List<GameObject>();
+	public static List<GameObject> lightList = new List<GameObject>();
 	// Use this for initialization
 	void Start () {
 		

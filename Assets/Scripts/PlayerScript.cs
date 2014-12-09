@@ -21,12 +21,7 @@ public class PlayerScript : MonoBehaviour {
 
 
 
-		//contains all player controls
-
-
-
-
-						//left and right movement
+		//left and right movement
 		if (Input.GetKey (KeyCode.A)) {
 			transform.position = Vector3.MoveTowards (transform.position, transform.position - new Vector3 (4f, 0, 0), Time.deltaTime * 4);
 			transform.localScale = new Vector3 (-7, 7, 1);
