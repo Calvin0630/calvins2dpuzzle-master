@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class ButtonScript : MonoBehaviour {
@@ -16,7 +16,7 @@ public class ButtonScript : MonoBehaviour {
 	    if (hit.collider != null) {
 			float distance = Mathf.Abs(hit.point.y-transform.position.y);
 			if (distance <= 1.1f) {
-				Debug.Log ("It Worked!!");
+
 			}
 		}
 	}

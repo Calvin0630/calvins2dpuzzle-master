@@ -9,6 +9,7 @@ public class Player2Script : MonoBehaviour {
 	bool jumping2 = false;
 	float distanceFromGround;
 	float sprinting = 1;
+	public static float speedOfLight = 20;
 	public static float lightDelay = 5;
 	float lightTimer = lightDelay;
 	public static List<GameObject> lightList = new List<GameObject>();
@@ -28,8 +29,18 @@ public class Player2Script : MonoBehaviour {
 			sprinting = 1;		
 		}
 
+
 		transform.position = Vector3.MoveTowards(transform.position, transform.position + new Vector3(4f,0,0) * sprinting * Input.GetAxis("LX"), Time.deltaTime * 4);
-			
+
+
+		/**if (Input.GetAxis ("LX") != 0) {
+			if (Input.GetAxis ("LX") > 0) {
+					
+			}
+			else {
+
+			}
+		}*/
 
 		
 		//controls for jumping
@@ -40,7 +51,7 @@ public class Player2Script : MonoBehaviour {
 				}
 			jumping1 = true;
 			
-			}
+		}
 
 
 
@@ -50,21 +61,25 @@ public class Player2Script : MonoBehaviour {
 			GameObject prefab = (GameObject)Resources.Load ("ballOfLight");
 			GameObject light = (GameObject)Instantiate (prefab, transform.position, Quaternion.identity);
 			Vector2 direction = new Vector2(Input.GetAxis ("RX"), Input.GetAxis ("RY"));
-			light.rigidbody2D.AddForce (setMagnitude(.5f,direction));
+			light.rigidbody2D.velocity = setMagnitude(speedOfLight,direction);
 			lightList.Add (light);
 			lightTimer = 0;
 		}
 
-		//checks if light is off the screen. If so it despawns them.
+
+
 		if (lightList.Count != 0) {
 			for (int i=0;i < lightList.Count;i++) {
+				//checks if light is off the screen. If so it despawns them.
 				if (Mathf.Abs(lightList[i].transform.position.y)> Camera.main.orthographicSize || Mathf.Abs(lightList[i].transform.position.x)> Camera.main.orthographicSize * Camera.main.aspect) {
 					Destroy(lightList[i]);
 					lightList.RemoveAt(i);
 				}
 			}
 		}
+
 	}
+
 	
 	void FixedUpdate(){
 

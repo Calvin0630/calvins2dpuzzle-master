@@ -7,9 +7,9 @@ public class PlayerScript : MonoBehaviour {
 	bool jumping1 = false;
 	bool jumping2 = false;
 	float distanceFromGround;
-	Vector3 mousePos;
 	int orbCount = 0;
 	GameObject[] blackHoles = new GameObject[5];
+
 
 	// Use this for initialization
 	void Start () {
@@ -32,7 +32,7 @@ public class PlayerScript : MonoBehaviour {
 		}
 		
 		//controls for jumping
-		if (Input.GetKeyDown (KeyCode.Space) && !jumping2) {
+		if (Input.GetKeyDown (KeyCode.W) && !jumping2) {
 			gameObject.rigidbody2D.AddForce (new Vector2 (0, 256.0f));
 			if (jumping1) {
 				jumping2 = true;
@@ -40,6 +40,8 @@ public class PlayerScript : MonoBehaviour {
 			jumping1 = true;
 
 		}
+
+
 		
 
 		//instantiates black holes on mouse click
@@ -48,6 +50,8 @@ public class PlayerScript : MonoBehaviour {
 			GameObject clone = (GameObject)Instantiate (prefab, getWorldMouseCoordinates(), Quaternion.identity);
 			blackHoles[orbCount] = clone;
 			orbCount++;
+
+
 					
 		}
 
@@ -97,10 +101,15 @@ public class PlayerScript : MonoBehaviour {
 		return distance;
 	}
 
+	public Vector2 getVectorFromAToB (Vector2 A, Vector2 B) {
+		Vector2 result = new Vector2 ((B.x - A.x), (B.y - A.y));
+		return result;
+	}
+
 	public Vector2 getDistance(Vector2 vector, Vector2 secondVector) {
 		float differenceY = Mathf.Abs(vector.y - secondVector.y);
 		float differenceX = Mathf.Abs(vector.x - secondVector.x);
 		Vector2 distance = new Vector2 (differenceX, differenceY);
-		return distance;
+		return distance;  
 	}
 }
