@@ -7,9 +7,10 @@ public class BlackholeScript : MonoBehaviour {
 	Vector2 forceOnLight;
 	Vector2 resultVelocity;
 	Collider2D[] col; 
-	float blackholeStrength = 30;
+	float blackholeStrength = 1;
 	float radiusOfAffectedArea = 20;
-	float speed;
+	float speedOfLight = 50;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -21,13 +22,12 @@ public class BlackholeScript : MonoBehaviour {
 
 		for (int i=0; i<col.Length; i++) {
 			lightToBlackhole = getVectorFromAToB (col[i].gameObject.transform.position, transform.position);
-			forceOnLight = ( blackholeStrength * (1/(getMagnitude(lightToBlackhole)*getMagnitude(lightToBlackhole)) * lightToBlackhole));
+			forceOnLight = ( blackholeStrength * (radiusOfAffectedArea/(getMagnitude(lightToBlackhole)*getMagnitude(lightToBlackhole)) * lightToBlackhole));
 			resultVelocity = new Vector2( col[i].gameObject.rigidbody2D.velocity.x + forceOnLight.x , col[i].gameObject.rigidbody2D.velocity.y + forceOnLight.y );
-
+			resultVelocity = setMagnitude(speedOfLight, resultVelocity);
 			col[i].gameObject.rigidbody2D.velocity = resultVelocity;
 		}
 
-		//col = null;
 	}
 
 

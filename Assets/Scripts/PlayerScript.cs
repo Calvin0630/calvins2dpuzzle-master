@@ -8,7 +8,8 @@ public class PlayerScript : MonoBehaviour {
 	bool jumping2 = false;
 	float distanceFromGround;
 	int orbCount = 0;
-	GameObject[] blackHoles = new GameObject[5];
+	GameObject[] blackholes = new GameObject[5];
+	float jumpStrength = 9;
 
 
 	// Use this for initialization
@@ -33,7 +34,8 @@ public class PlayerScript : MonoBehaviour {
 		
 		//controls for jumping
 		if (Input.GetKeyDown (KeyCode.W) && !jumping2) {
-			gameObject.rigidbody2D.AddForce (new Vector2 (0, 256.0f));
+			//gameObject.rigidbody2D.AddForce (new Vector2 (0, 256.0f));
+			gameObject.rigidbody2D.velocity = new Vector2(gameObject.rigidbody2D.velocity.x, jumpStrength);
 			if (jumping1) {
 				jumping2 = true;
 			}
@@ -46,9 +48,9 @@ public class PlayerScript : MonoBehaviour {
 
 		//instantiates black holes on mouse click
 		if (Input.GetMouseButtonDown(0) && orbCount < 5) {
-			GameObject prefab = (GameObject)Resources.Load ("Sphere");
+			GameObject prefab = (GameObject)Resources.Load ("sphere");
 			GameObject clone = (GameObject)Instantiate (prefab, getWorldMouseCoordinates(), Quaternion.identity);
-			blackHoles[orbCount] = clone;
+			blackholes[orbCount] = clone;
 			orbCount++;
 
 
@@ -58,9 +60,9 @@ public class PlayerScript : MonoBehaviour {
 		//control to delete black hole
 		if (Input.GetMouseButtonDown(1) && orbCount > 0) {
 
-			for (int i=blackHoles.Length-1;i>=0;i--) {
-				if (blackHoles[i] != null) {
-					Destroy(blackHoles[i]);
+			for (int i=blackholes.Length-1;i>=0;i--) {
+				if (blackholes[i] != null) {
+					Destroy(blackholes[i]);
 					break;
 				}
 			}
