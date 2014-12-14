@@ -9,11 +9,11 @@ public class BlackholeScript : MonoBehaviour {
 	Collider2D[] col; 
 	float blackholeStrength = 1;
 	float radiusOfAffectedArea = 20;
-	float speedOfLight = 50;
+	float speedOfLight;// = Player2Script.speedOfLight;
 
 	// Use this for initialization
 	void Start () {
-		
+		speedOfLight = Player2Script.speedOfLight;
 	}
 	
 	// Update is called once per frame

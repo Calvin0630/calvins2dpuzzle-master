@@ -52,7 +52,7 @@ public class Player2Script : MonoBehaviour {
 
 		//controls for shooting light
 		if (Input.GetButton ("RB") && ((Input.GetAxis ("RX") + Input.GetAxis ("RY") > 0) || (Input.GetAxis ("RX") + Input.GetAxis ("RY") < 0)) && lightTimer > lightDelay ) {
-			GameObject prefab = (GameObject)Resources.Load ("ballOfLight");
+			GameObject prefab = (GameObject)Resources.Load ("Player/ballOfLight");
 			GameObject light = (GameObject)Instantiate (prefab, transform.position, Quaternion.identity);
 			Vector2 direction = new Vector2(Input.GetAxis ("RX"), Input.GetAxis ("RY"));
 			light.rigidbody2D.velocity = setMagnitude(speedOfLight,direction);

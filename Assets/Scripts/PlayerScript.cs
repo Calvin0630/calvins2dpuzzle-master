@@ -48,7 +48,7 @@ public class PlayerScript : MonoBehaviour {
 
 		//instantiates black holes on mouse click
 		if (Input.GetMouseButtonDown(0) && orbCount < 5) {
-			GameObject prefab = (GameObject)Resources.Load ("sphere");
+			GameObject prefab = (GameObject)Resources.Load ("Player/sphere");
 			GameObject clone = (GameObject)Instantiate (prefab, getWorldMouseCoordinates(), Quaternion.identity);
 			blackholes[orbCount] = clone;
 			orbCount++;
