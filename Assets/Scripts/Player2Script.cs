@@ -9,15 +9,19 @@ public class Player2Script : MonoBehaviour {
 	bool jumping2 = false;
 	float jumpStrength = 9;
 	float distanceFromGround;
-	float sprinting = 1;
+	float walkSpeed = 4;
+	float runningSpeed = 4;
+	float initialRunningSpeed;
+	float maxRunSpeed = 6;
 	public static float speedOfLight = 50;
 	public static float lightDelay = 5;
 	float lightTimer = lightDelay;
 	public static List<GameObject> lightList = new List<GameObject>();
 	Collider2D col;
+
 	// Use this for initialization
 	void Start () {
-		
+		initialRunningSpeed = runningSpeed;
 	}
 	
 	// Update is called once per frame
@@ -25,20 +29,23 @@ public class Player2Script : MonoBehaviour {
 
 
 
-		if (Input.GetButton ("LJoystickButton")) {
-			sprinting = 2f;
-		} else {
-			sprinting = 1;		
+		if (Input.GetButton ("Y")) {
+			gameObject.rigidbody2D.velocity = new Vector2 (runningSpeed * Input.GetAxis ("LX"), gameObject.rigidbody2D.velocity.y);
+			if (runningSpeed<maxRunSpeed) {
+				runningSpeed+=.2f;
+			}
+		} 
+		else if (gameObject.rigidbody2D.velocity.x == 0 || !Input.GetButton ("Y")) { 
+			runningSpeed = initialRunningSpeed;
 		}
-
-
-		transform.position = Vector3.MoveTowards(transform.position, transform.position + new Vector3(4f,0,0) * sprinting * Input.GetAxis("LX"), Time.deltaTime * 4);
-
-
-
 		
+		transform.position = Vector3.MoveTowards(transform.position, transform.position + new Vector3(4f,0,0) * Input.GetAxis("LX"), Time.deltaTime * 4);
+
+		//gameObject.rigidbody2D.velocity = new Vector2(4 * Input.GetAxis("LX"), gameObject.rigidbody2D.velocity.y);
+
+
 		//controls for jumping
-		if ( Input.GetButtonDown("A") && !jumping2) {
+		if ( Input.GetButtonDown("B") && !jumping2) {
 			gameObject.rigidbody2D.velocity = new Vector2(gameObject.rigidbody2D.velocity.x, jumpStrength);
 				if (jumping1) {
 					jumping2 = true;
@@ -81,6 +88,8 @@ public class Player2Script : MonoBehaviour {
 			}
 		}
 
+	
+	
 	}
 
 	

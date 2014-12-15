@@ -6,6 +6,9 @@ public class PlayerScript : MonoBehaviour {
 	
 	bool jumping1 = false;
 	bool jumping2 = false;
+	float runningSpeed = 4;
+	float initialRunningSpeed;
+	float maxRunSpeed = 6;
 	float distanceFromGround;
 	int orbCount = 0;
 	GameObject[] blackholes = new GameObject[5];
@@ -14,24 +17,39 @@ public class PlayerScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
+		initialRunningSpeed = runningSpeed;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-
-
 		//left and right movement
 		if (Input.GetKey (KeyCode.A)) {
-			transform.position = Vector3.MoveTowards (transform.position, transform.position - new Vector3 (4f, 0, 0), Time.deltaTime * 4);
+			//transform.position = Vector3.MoveTowards (transform.position, transform.position - new Vector3 (4f, 0, 0), Time.deltaTime * 4);
+			gameObject.rigidbody2D.velocity = new Vector2(-4 , rigidbody2D.velocity.y);
+			//rigidbody2D.AddForce(addVectors(transform.position,new Vector2(-40f,0)));
 			transform.localScale = new Vector3 (-7, 7, 1);
 		} 
 		else if (Input.GetKey (KeyCode.D)) {
-			transform.position = Vector3.MoveTowards (transform.position, transform.position + new Vector3 (4f, 0, 0), Time.deltaTime * 4);
+			//transform.position = Vector3.MoveTowards (transform.position, transform.position + new Vector3 (4f, 0, 0), Time.deltaTime * 4);
+			gameObject.rigidbody2D.velocity = new Vector2(4 , rigidbody2D.velocity.y);
+			//rigidbody2D.AddForce(addVectors(transform.position,new Vector2(40f,0)));
 			transform.localScale = new Vector3 (7, 7, 1);
 		}
-		
+		//Sprinting stuff
+		if (Input.GetKey (KeyCode.LeftShift)) {
+			gameObject.rigidbody2D.velocity = new Vector2 (runningSpeed * Input.GetAxis ("LX"), gameObject.rigidbody2D.velocity.y);
+			if (runningSpeed<maxRunSpeed) {
+				runningSpeed+=.2f;
+			}
+		} 
+		else if (gameObject.rigidbody2D.velocity.x == 0 || !Input.GetKey (KeyCode.LeftShift)) { 
+			runningSpeed = initialRunningSpeed;
+		}
+		Debug.Log (runningSpeed);
+
+
+
 		//controls for jumping
 		if (Input.GetKeyDown (KeyCode.W) && !jumping2) {
 			//gameObject.rigidbody2D.AddForce (new Vector2 (0, 256.0f));
@@ -73,13 +91,13 @@ public class PlayerScript : MonoBehaviour {
 	}
 	
 	void FixedUpdate(){
+		//logic for double jumping
 		Vector2 feet = new Vector2 (transform.position.x, transform.position.y-1.6f);
 		RaycastHit2D hit = Physics2D.Raycast (feet, -Vector2.up);
 		if (hit.collider != null)
 		{
 			distanceFromGround = Mathf.Abs(hit.point.y - transform.position.y);
 		}
-		
 		if (distanceFromGround <= 1.7f && jumping2 ){
 			jumping1 = false;
 			jumping2 = false;
@@ -89,6 +107,12 @@ public class PlayerScript : MonoBehaviour {
 	}
 	
 	//methods
+
+	public Vector2 addVectors(Vector2 a, Vector2 b) {
+		Vector2 result = new Vector2 (a.x + b.x, a.y + b.y);
+		return result;
+	}
+
 	public Vector3 getWorldMouseCoordinates() {
 		Vector3 mouse = new Vector3 (Input.mousePosition.x, Input.mousePosition.y, 0);
 		Vector3 mousePos = Camera.main.ScreenToViewportPoint (mouse);
