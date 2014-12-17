@@ -6,9 +6,9 @@ public class PlayerScript : MonoBehaviour {
 	
 	bool jumping1 = false;
 	bool jumping2 = false;
-	float runningSpeed = 4;
-	float initialRunningSpeed;
-	float maxRunSpeed = 6;
+	float movementSpeed = 4;
+	float initialMovementSpeed;
+	float maxRunSpeed = 7;
 	float distanceFromGround;
 	int orbCount = 0;
 	GameObject[] blackholes = new GameObject[5];
@@ -17,7 +17,7 @@ public class PlayerScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		initialRunningSpeed = runningSpeed;
+		initialMovementSpeed = movementSpeed;
 	}
 	
 	// Update is called once per frame
@@ -26,27 +26,23 @@ public class PlayerScript : MonoBehaviour {
 		//left and right movement
 		if (Input.GetKey (KeyCode.A)) {
 			//transform.position = Vector3.MoveTowards (transform.position, transform.position - new Vector3 (4f, 0, 0), Time.deltaTime * 4);
-			gameObject.rigidbody2D.velocity = new Vector2(-4 , rigidbody2D.velocity.y);
+			gameObject.rigidbody2D.velocity = new Vector2(-movementSpeed , rigidbody2D.velocity.y);
 			//rigidbody2D.AddForce(addVectors(transform.position,new Vector2(-40f,0)));
 			transform.localScale = new Vector3 (-7, 7, 1);
 		} 
 		else if (Input.GetKey (KeyCode.D)) {
 			//transform.position = Vector3.MoveTowards (transform.position, transform.position + new Vector3 (4f, 0, 0), Time.deltaTime * 4);
-			gameObject.rigidbody2D.velocity = new Vector2(4 , rigidbody2D.velocity.y);
+			gameObject.rigidbody2D.velocity = new Vector2(movementSpeed , rigidbody2D.velocity.y);
 			//rigidbody2D.AddForce(addVectors(transform.position,new Vector2(40f,0)));
 			transform.localScale = new Vector3 (7, 7, 1);
 		}
-		//Sprinting stuff
-		if (Input.GetKey (KeyCode.LeftShift)) {
-			gameObject.rigidbody2D.velocity = new Vector2 (runningSpeed * Input.GetAxis ("LX"), gameObject.rigidbody2D.velocity.y);
-			if (runningSpeed<maxRunSpeed) {
-				runningSpeed+=.2f;
-			}
+
+		if (Input.GetKey (KeyCode.LeftShift) && movementSpeed < maxRunSpeed) {
+			movementSpeed+=.2f;
 		} 
 		else if (gameObject.rigidbody2D.velocity.x == 0 || !Input.GetKey (KeyCode.LeftShift)) { 
-			runningSpeed = initialRunningSpeed;
+			movementSpeed = initialMovementSpeed;
 		}
-		Debug.Log (runningSpeed);
 
 
 

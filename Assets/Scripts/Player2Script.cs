@@ -9,9 +9,8 @@ public class Player2Script : MonoBehaviour {
 	bool jumping2 = false;
 	float jumpStrength = 9;
 	float distanceFromGround;
-	float walkSpeed = 4;
-	float runningSpeed = 4;
-	float initialRunningSpeed;
+	float movementSpeed = 4;
+	float initialMovementSpeed;
 	float maxRunSpeed = 6;
 	public static float speedOfLight = 50;
 	public static float lightDelay = 5;
@@ -21,7 +20,7 @@ public class Player2Script : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		initialRunningSpeed = runningSpeed;
+		initialMovementSpeed = movementSpeed; 
 	}
 	
 	// Update is called once per frame
@@ -30,18 +29,18 @@ public class Player2Script : MonoBehaviour {
 
 
 		if (Input.GetButton ("Y")) {
-			gameObject.rigidbody2D.velocity = new Vector2 (runningSpeed * Input.GetAxis ("LX"), gameObject.rigidbody2D.velocity.y);
-			if (runningSpeed<maxRunSpeed) {
-				runningSpeed+=.2f;
+			gameObject.rigidbody2D.velocity = new Vector2 (movementSpeed * Input.GetAxis ("LX"), gameObject.rigidbody2D.velocity.y);
+			if (movementSpeed<maxRunSpeed) {
+				movementSpeed+=.2f;
 			}
 		} 
 		else if (gameObject.rigidbody2D.velocity.x == 0 || !Input.GetButton ("Y")) { 
-			runningSpeed = initialRunningSpeed;
+			movementSpeed = initialMovementSpeed;
 		}
 		
-		transform.position = Vector3.MoveTowards(transform.position, transform.position + new Vector3(4f,0,0) * Input.GetAxis("LX"), Time.deltaTime * 4);
+		//transform.position = Vector3.MoveTowards(transform.position, transform.position + new Vector3(4f,0,0) * Input.GetAxis("LX"), Time.deltaTime * 4);
 
-		//gameObject.rigidbody2D.velocity = new Vector2(4 * Input.GetAxis("LX"), gameObject.rigidbody2D.velocity.y);
+		gameObject.rigidbody2D.velocity = new Vector2(movementSpeed * Input.GetAxis("LX"), gameObject.rigidbody2D.velocity.y);
 
 
 		//controls for jumping
