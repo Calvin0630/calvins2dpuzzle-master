@@ -12,7 +12,7 @@ public class Player2Script : MonoBehaviour {
 	float movementSpeed = 4;
 	float initialMovementSpeed;
 	float maxRunSpeed = 6;
-	public static float speedOfLight = 50;
+	public static float speedOfLight = 30;
 	public static float lightDelay = 5;
 	float lightTimer = lightDelay;
 	public static List<GameObject> lightList = new List<GameObject>();
@@ -28,7 +28,7 @@ public class Player2Script : MonoBehaviour {
 
 
 
-		if (Input.GetButton ("Y")) {
+		if (Input.GetButton ("LB")) {
 			gameObject.rigidbody2D.velocity = new Vector2 (movementSpeed * Input.GetAxis ("LX"), gameObject.rigidbody2D.velocity.y);
 			if (movementSpeed<maxRunSpeed) {
 				movementSpeed+=.2f;
@@ -44,7 +44,7 @@ public class Player2Script : MonoBehaviour {
 
 
 		//controls for jumping
-		if ( Input.GetButtonDown("B") && !jumping2) {
+		if ( Input.GetButtonDown("A") && !jumping2) {
 			gameObject.rigidbody2D.velocity = new Vector2(gameObject.rigidbody2D.velocity.x, jumpStrength);
 				if (jumping1) {
 					jumping2 = true;
@@ -67,10 +67,11 @@ public class Player2Script : MonoBehaviour {
 		}
 
 
-
+		Debug.DrawLine (new Vector3(0,10,0), new Vector3(0,0,0),Color.red);
 		if (lightList.Count != 0) {
 			for (int i=0;i < lightList.Count;i++) {
 
+				Debug.DrawLine(lightList[i].transform.position, lightList[i+1].transform.position, Color.red);
 				//checks if light is off the screen. If so it despawns them.
 				if (Mathf.Abs(lightList[i].transform.position.y)> Camera.main.orthographicSize || Mathf.Abs(lightList[i].transform.position.x)> Camera.main.orthographicSize * Camera.main.aspect) {
 					Destroy(lightList[i]);
