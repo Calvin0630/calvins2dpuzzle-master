@@ -13,20 +13,36 @@ public class Player2Script : MonoBehaviour {
 	float initialMovementSpeed;
 	float maxRunSpeed = 6;
 	public static float speedOfLight = 30;
-	public static float lightDelay = 5;
+	public static float lightDelay = 0;
 	float lightTimer = lightDelay;
+	int prevLightCount;
 	public static List<GameObject> lightList = new List<GameObject>();
 	Collider2D col;
 
 	// Use this for initialization
 	void Start () {
 		initialMovementSpeed = movementSpeed; 
+
+
+		LineRenderer test = gameObject.AddComponent<LineRenderer>();
+		test.SetColors (Color.red, Color.red);
+		test.SetWidth (.25f,.25f);
+
+
+
+
+		test.SetVertexCount (3);
+		test.SetPosition(1, new Vector3(0,1,0));
+		test.SetPosition(2, new Vector3(2,0,0));
+		test.SetPosition(3, new Vector3(3,3,0));
 	}
-	
+
+
+
 	// Update is called once per frame
 	void Update () {
 
-
+		LineRenderer test = GetComponent<LineRenderer>();
 
 		if (Input.GetButton ("LB")) {
 			gameObject.rigidbody2D.velocity = new Vector2 (movementSpeed * Input.GetAxis ("LX"), gameObject.rigidbody2D.velocity.y);
@@ -67,11 +83,15 @@ public class Player2Script : MonoBehaviour {
 		}
 
 
-		Debug.DrawLine (new Vector3(0,10,0), new Vector3(0,0,0),Color.red);
+		test.SetVertexCount (lightList.Count);
+
+		prevLightCount = lightList.Count;
+
 		if (lightList.Count != 0) {
 			for (int i=0;i < lightList.Count;i++) {
 
-				Debug.DrawLine(lightList[i].transform.position, lightList[i+1].transform.position, Color.red);
+				test.SetPosition(i, lightList[i].transform.position);
+
 				//checks if light is off the screen. If so it despawns them.
 				if (Mathf.Abs(lightList[i].transform.position.y)> Camera.main.orthographicSize || Mathf.Abs(lightList[i].transform.position.x)> Camera.main.orthographicSize * Camera.main.aspect) {
 					Destroy(lightList[i]);
@@ -85,7 +105,10 @@ public class Player2Script : MonoBehaviour {
 					lightList.RemoveAt(i);
 
 				}
+
+
 			}
+
 		}
 
 	
