@@ -25,16 +25,12 @@ public class Player2Script : MonoBehaviour {
 
 
 		LineRenderer test = gameObject.AddComponent<LineRenderer>();
-		test.SetColors (Color.red, Color.red);
+		test.SetColors (Color.yellow, Color.yellow);
+		test.material.color = Color.yellow;
 		test.SetWidth (.25f,.25f);
 
 
 
-
-		test.SetVertexCount (3);
-		test.SetPosition(1, new Vector3(0,1,0));
-		test.SetPosition(2, new Vector3(2,0,0));
-		test.SetPosition(3, new Vector3(3,3,0));
 	}
 
 
@@ -85,9 +81,11 @@ public class Player2Script : MonoBehaviour {
 
 		test.SetVertexCount (lightList.Count);
 
+
 		prevLightCount = lightList.Count;
 
 		if (lightList.Count != 0) {
+
 			for (int i=0;i < lightList.Count;i++) {
 
 				test.SetPosition(i, lightList[i].transform.position);
