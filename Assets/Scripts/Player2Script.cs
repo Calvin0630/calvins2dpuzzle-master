@@ -65,17 +65,20 @@ public class Player2Script : MonoBehaviour {
 			
 		}
 
-
+		//Debug.Log (transform.position);
 
 
 		//controls for shooting light
 		if (Input.GetButton ("RB") && ((Input.GetAxis ("RX") + Input.GetAxis ("RY") > 0) || (Input.GetAxis ("RX") + Input.GetAxis ("RY") < 0)) && lightTimer > lightDelay ) {
 			GameObject prefab = (GameObject)Resources.Load ("Player/ballOfLight");
-			GameObject light = (GameObject)Instantiate (prefab, transform.position, Quaternion.identity);
+			GameObject light = (GameObject)Instantiate (prefab,transform.position, Quaternion.identity);
 			Vector2 direction = new Vector2(Input.GetAxis ("RX"), Input.GetAxis ("RY"));
-			light.rigidbody2D.velocity = setMagnitude(speedOfLight,direction);
+			direction = setMagnitude(speedOfLight,direction);
+			light.rigidbody2D.velocity = direction;
 			lightList.Add (light);
 			lightTimer = 0;
+
+			Debug.Log (light.transform.position);
 		}
 
 
