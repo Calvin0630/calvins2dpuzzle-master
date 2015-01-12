@@ -8,6 +8,7 @@ public class BlackholeScript : MonoBehaviour {
 	Vector2 resultVelocity;
 	Collider2D[] col; 
 	float blackholeStrength = .6f;
+	Vector2 lightForce;
 	float radiusOfAffectedArea = 20;
 	float speedOfLight;   // Player2Script.speedOfLight;
 
@@ -21,11 +22,12 @@ public class BlackholeScript : MonoBehaviour {
 		col = Physics2D.OverlapCircleAll(transform.position, radiusOfAffectedArea,1 << 8);
 
 		for (int i=0; i<col.Length; i++) {
+
 			lightToBlackhole = getVectorFromAToB (col[i].gameObject.transform.position, transform.position);
-			forceOnLight = ( blackholeStrength * (radiusOfAffectedArea/(getMagnitude(lightToBlackhole)*getMagnitude(lightToBlackhole)) * lightToBlackhole));
-			resultVelocity = new Vector2( col[i].gameObject.rigidbody2D.velocity.x + forceOnLight.x , col[i].gameObject.rigidbody2D.velocity.y + forceOnLight.y );
-			resultVelocity = setMagnitude(speedOfLight, resultVelocity);
-			col[i].gameObject.rigidbody2D.velocity = resultVelocity;
+			lightForce = setMagnitude(blackholeStrength, lightToBlackhole);
+			col[i].gameObject.rigidbody2D.AddForce(lightForce);
+
+
 		}
 
 	}

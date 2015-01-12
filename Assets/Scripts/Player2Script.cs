@@ -12,7 +12,7 @@ public class Player2Script : MonoBehaviour {
 	float movementSpeed = 4;
 	float initialMovementSpeed;
 	float maxRunSpeed = 6;
-	public static float speedOfLight = 30;
+	public static float speedOfLight = 1000;
 	public static float lightDelay = 0;
 	float lightTimer = lightDelay;
 	int prevLightCount;
@@ -38,7 +38,7 @@ public class Player2Script : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		LineRenderer test = GetComponent<LineRenderer>();
+		//LineRenderer test = GetComponent<LineRenderer>();
 
 		if (Input.GetButton ("LB")) {
 			gameObject.rigidbody2D.velocity = new Vector2 (movementSpeed * Input.GetAxis ("LX"), gameObject.rigidbody2D.velocity.y);
@@ -65,7 +65,44 @@ public class Player2Script : MonoBehaviour {
 			
 		}
 
-		//Debug.Log (transform.position);
+
+
+
+
+		//despawns light
+		LineRenderer test1 = GetComponent<LineRenderer>();
+		test1.SetVertexCount (lightList.Count);
+		
+		
+		prevLightCount = lightList.Count;
+		
+		if (lightList.Count != 0) {
+			
+			for (int i=0;i < lightList.Count;i++) {
+				
+				test1.SetPosition(i, lightList[i].transform.position);
+				
+				//checks if light is off the screen. If so it despawns them.
+				if (Mathf.Abs(lightList[i].transform.position.y)> Camera.main.orthographicSize || Mathf.Abs(lightList[i].transform.position.x)> Camera.main.orthographicSize * Camera.main.aspect) {
+					Destroy(lightList[i]);
+					lightList.RemoveAt(i);
+					continue;
+				}
+				//check if the light is colliding with a wall. if so it despawns it.
+				col = Physics2D.OverlapCircle (lightList[i].transform.position, .2f, 1 << 9);
+				if (col != null) {
+					Destroy(lightList[i]);
+					lightList.RemoveAt(i);
+					continue;
+					
+				}
+				
+				
+			}
+			
+		}
+
+
 
 
 		//controls for shooting light
@@ -75,48 +112,21 @@ public class Player2Script : MonoBehaviour {
 			Vector2 direction = new Vector2(Input.GetAxis ("RX"), Input.GetAxis ("RY"));
 			direction = setMagnitude(speedOfLight,direction);
 			light.rigidbody2D.velocity = direction;
+			//light.rigidbody2D.AddForce(direction);
 			lightList.Add (light);
 			lightTimer = 0;
 
-			Debug.Log (light.transform.position);
-		}
-
-
-		test.SetVertexCount (lightList.Count);
-
-
-		prevLightCount = lightList.Count;
-
-		if (lightList.Count != 0) {
-
-			for (int i=0;i < lightList.Count;i++) {
-
-				test.SetPosition(i, lightList[i].transform.position);
-
-				//checks if light is off the screen. If so it despawns them.
-				if (Mathf.Abs(lightList[i].transform.position.y)> Camera.main.orthographicSize || Mathf.Abs(lightList[i].transform.position.x)> Camera.main.orthographicSize * Camera.main.aspect) {
-					Destroy(lightList[i]);
-					lightList.RemoveAt(i);
-					continue;
-				}
-				//check if the light is colliding with a wall. if so it despawns it.
-				col = Physics2D.OverlapCircle (lightList[i].transform.position, .5f, 1 << 9);
-				if (col != null) {
-					Destroy(lightList[i]);
-					lightList.RemoveAt(i);
-
-				}
-
-
-			}
 
 		}
+
+
+
 
 	
 	
 	}
 
-	
+
 	void FixedUpdate(){
 
 		lightTimer += 1;
@@ -135,6 +145,13 @@ public class Player2Script : MonoBehaviour {
 
 
 	}
+
+
+	//is called after update
+	public void LateUpdate () {
+
+	}
+
 
 	public float getMagnitude(Vector2 vector) {
 		float magnitude;
