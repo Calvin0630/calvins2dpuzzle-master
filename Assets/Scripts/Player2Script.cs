@@ -88,14 +88,7 @@ public class Player2Script : MonoBehaviour {
 					lightList.RemoveAt(i);
 					continue;
 				}
-				//check if the light is colliding with a wall. if so it despawns it.
-				col = Physics2D.OverlapCircle (lightList[i].transform.position, .2f, 1 << 9);
-				if (col != null) {
-					Destroy(lightList[i]);
-					lightList.RemoveAt(i);
-					continue;
-					
-				}
+
 				
 				
 			}
@@ -106,20 +99,24 @@ public class Player2Script : MonoBehaviour {
 
 
 		//controls for shooting light
-		if (Input.GetButton ("RB") && ((Input.GetAxis ("RX") + Input.GetAxis ("RY") > 0) || (Input.GetAxis ("RX") + Input.GetAxis ("RY") < 0)) && lightTimer > lightDelay ) {
+		/**
+		if (Input.GetAxis ("RT") > .9f && ((Input.GetAxis ("RX") + Input.GetAxis ("RY") > 0) || (Input.GetAxis ("RX") + Input.GetAxis ("RY") < 0)) && lightTimer > lightDelay ) {
 			GameObject prefab = (GameObject)Resources.Load ("Player/ballOfLight");
 			GameObject light = (GameObject)Instantiate (prefab,transform.position, Quaternion.identity);
 			Vector2 direction = new Vector2(Input.GetAxis ("RX"), Input.GetAxis ("RY"));
-			direction = setMagnitude(speedOfLight,direction);
+			direction = setMagnitude(10,direction);
 			light.rigidbody2D.velocity = direction;
 			//light.rigidbody2D.AddForce(direction);
 			lightList.Add (light);
 			lightTimer = 0;
 
 
-		}
+		}*/
+
+		if (Input.GetAxis ("RT") > .9f && getMagnitude (new Vector2()
 
 
+		Debug.Log (Input.GetAxis ("RT"));
 
 
 	
