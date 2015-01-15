@@ -12,7 +12,9 @@ public class Player2Script : MonoBehaviour {
 	float movementSpeed = 4;
 	float initialMovementSpeed;
 	float maxRunSpeed = 6;
-	public static float speedOfLight = 1000;
+	Vector2 rightStickDirection;
+	bool ableToshootLight = false;
+	public static float speedOfLight = 250;
 	public static float lightDelay = 0;
 	float lightTimer = lightDelay;
 	int prevLightCount;
@@ -24,10 +26,6 @@ public class Player2Script : MonoBehaviour {
 		initialMovementSpeed = movementSpeed; 
 
 
-		LineRenderer test = gameObject.AddComponent<LineRenderer>();
-		test.SetColors (Color.yellow, Color.yellow);
-		test.material.color = Color.yellow;
-		test.SetWidth (.25f,.25f);
 
 
 
@@ -50,7 +48,7 @@ public class Player2Script : MonoBehaviour {
 			movementSpeed = initialMovementSpeed;
 		}
 		
-		//transform.position = Vector3.MoveTowards(transform.position, transform.position + new Vector3(4f,0,0) * Input.GetAxis("LX"), Time.deltaTime * 4);
+
 
 		gameObject.rigidbody2D.velocity = new Vector2(movementSpeed * Input.GetAxis("LX"), gameObject.rigidbody2D.velocity.y);
 
@@ -69,18 +67,14 @@ public class Player2Script : MonoBehaviour {
 
 
 
-		//despawns light
-		LineRenderer test1 = GetComponent<LineRenderer>();
-		test1.SetVertexCount (lightList.Count);
-		
-		
-		prevLightCount = lightList.Count;
+
+
 		
 		if (lightList.Count != 0) {
 			
 			for (int i=0;i < lightList.Count;i++) {
 				
-				test1.SetPosition(i, lightList[i].transform.position);
+			
 				
 				//checks if light is off the screen. If so it despawns them.
 				if (Mathf.Abs(lightList[i].transform.position.y)> Camera.main.orthographicSize || Mathf.Abs(lightList[i].transform.position.x)> Camera.main.orthographicSize * Camera.main.aspect) {
@@ -99,24 +93,39 @@ public class Player2Script : MonoBehaviour {
 
 
 		//controls for shooting light
-		/**
-		if (Input.GetAxis ("RT") > .9f && ((Input.GetAxis ("RX") + Input.GetAxis ("RY") > 0) || (Input.GetAxis ("RX") + Input.GetAxis ("RY") < 0)) && lightTimer > lightDelay ) {
+
+		rightStickDirection = new Vector2 (Input.GetAxis ("RX"), Input.GetAxis ("RY"));
+
+		//Debug.Log (roundToOne(-.8f));
+
+		if (getMagnitude (rightStickDirection) == 0) 
+		{
+			ableToshootLight= true;
+		}
+
+		if (Input.GetAxis ("RT") > .9f && getMagnitude (rightStickDirection) > .8f && ableToshootLight) 
+		{
+			setMagnitude (1, rightStickDirection);
+
+			rightStickDirection = new Vector2(roundToOne(rightStickDirection.x) , roundToOne (rightStickDirection.y));          //roundToADirection(rightStickDirection);
+			Debug.Log (rightStickDirection.x);
+			if (Mathf.Abs(rightStickDirection.x) == 1)
+			{
+				rightStickDirection = new Vector2(rightStickDirection.x, 0);
+			}
+			else if (Mathf.Abs(rightStickDirection.y) == 1)
+			{
+				rightStickDirection = new Vector2(0,rightStickDirection.y);
+			}
 			GameObject prefab = (GameObject)Resources.Load ("Player/ballOfLight");
 			GameObject light = (GameObject)Instantiate (prefab,transform.position, Quaternion.identity);
-			Vector2 direction = new Vector2(Input.GetAxis ("RX"), Input.GetAxis ("RY"));
-			direction = setMagnitude(10,direction);
-			light.rigidbody2D.velocity = direction;
-			//light.rigidbody2D.AddForce(direction);
+
+			light.rigidbody2D.velocity = setMagnitude(speedOfLight, rightStickDirection);
 			lightList.Add (light);
-			lightTimer = 0;
+			ableToshootLight = false;
+		}
 
 
-		}*/
-
-		if (Input.GetAxis ("RT") > .9f && getMagnitude (new Vector2()
-
-
-		Debug.Log (Input.GetAxis ("RT"));
 
 
 	
@@ -171,4 +180,40 @@ public class Player2Script : MonoBehaviour {
 		return mouseUnit;
 	}
 
+	//rounds a number between -1 to 1 to -1, -1 over root two, 0 ,1 over root 2, or 1
+	public float roundToOne(float x) 
+	{
+		if (x > 0)
+		{
+			if (x < .354f)
+			{
+				x = 0;
+			}
+			else if (x <.835f)
+			{
+				x = .707f;
+			}
+			else {x = 1;}
+		}
+		else if (x<0) 
+		{
+			if (x > -.354f)
+			{
+				x = 0;
+			}
+			else if (x > -.835f)
+			{
+				x = -.707f;
+			}
+			else {x = -1;}
+		}
+		return x;
+	}
+
+	//rounds a vector2 of magnitude one to one of eight directions
+	public Vector2 roundToADirection(Vector2 z)
+	{
+		Vector2 result = new Vector2 (roundToOne(z.x), roundToOne(z.y));
+		return result;
+	}
 }
