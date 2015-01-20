@@ -1,30 +1,53 @@
-﻿/**using UnityEngine;
-using System.Collections;
-
-public class LightScript : MonoBehaviour {
-
-	Collision col;
-
-	void OnCollisionEnter (Collision col) {
-		if (col.GameObject.name == "tile") {
-			Destroy (gameObject);
-		}
-	}
-
-}
-*/
-
+﻿
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class LightScript : MonoBehaviour
 {
-	void OnCollisionEnter (Collision col)
+    TrailRenderer trail;
+    float trailCatchUpTime;
+    float timer = 1;
+    bool hitWall = false;
+    void Start () 
+    {
+        trail = gameObject.GetComponent<TrailRenderer>();
+        trailCatchUpTime = trail.time; 
+
+    }
+
+    void Update ()
+    {
+        
+    }
+
+    void FixedUpdate()
+    {
+        if (hitWall) {
+            timer--;
+        } 
+        
+
+        if (timer <= 0)
+        {
+            Debug.Log(transform.position);
+            Destroy(gameObject);
+        }
+    }
+
+
+	void OnCollisionEnter2D (Collision2D col)
 	{
-		if(col.gameObject.layer == LayerMask.NameToLayer("Environment"))
-		{
-			Destroy(col.gameObject);
-			Debug.Log ("It worked");
-		}
+        if (col.gameObject.layer == 9)
+        {
+            gameObject.rigidbody2D.velocity = Vector2.zero;
+            timer = trailCatchUpTime;
+            hitWall = true;
+            
+            /**
+            Destroy(gameObject);
+            Debug.Log("It worked");
+             */
+        }
 	}
 }

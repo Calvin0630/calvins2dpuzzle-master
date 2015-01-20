@@ -25,18 +25,17 @@ public class PlayerScript : MonoBehaviour {
 
 		//left and right movement
 		if (Input.GetKey (KeyCode.A)) {
-			//transform.position = Vector3.MoveTowards (transform.position, transform.position - new Vector3 (4f, 0, 0), Time.deltaTime * 4);
 			gameObject.rigidbody2D.velocity = new Vector2(-movementSpeed , rigidbody2D.velocity.y);
-			//rigidbody2D.AddForce(addVectors(transform.position,new Vector2(-40f,0)));
 			transform.localScale = new Vector3 (-7, 7, 1);
 		} 
 		else if (Input.GetKey (KeyCode.D)) {
-			//transform.position = Vector3.MoveTowards (transform.position, transform.position + new Vector3 (4f, 0, 0), Time.deltaTime * 4);
 			gameObject.rigidbody2D.velocity = new Vector2(movementSpeed , rigidbody2D.velocity.y);
-			//rigidbody2D.AddForce(addVectors(transform.position,new Vector2(40f,0)));
 			transform.localScale = new Vector3 (7, 7, 1);
 		}
+        else { gameObject.rigidbody2D.velocity = new Vector2(0, gameObject.rigidbody2D.velocity.y); }
 
+
+        // controls for sprinting
 		if (Input.GetKey (KeyCode.LeftShift) && movementSpeed < maxRunSpeed) {
 			movementSpeed+=.2f;
 		} 

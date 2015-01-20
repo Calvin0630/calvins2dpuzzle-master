@@ -5,14 +5,15 @@ public class SwitchScript : MonoBehaviour {
 
 
 	Collider2D col;
-	float affectedRadius = 1;
+	float affectedRadius = 2;
 	//public static Sprite off = Resources.Load ("Environment/switchOff", typeof(Sprite)) as Sprite;
 	public static Sprite on;// = Resources.Load ("Environment/switchOn", typeof(Sprite)) as Sprite;
-	bool triggered = false;
+	bool triggered;
 	
 
 	// Use this for initialization
 	void Start () {
+        triggered = false;
 		on = Resources.Load ("Environment/switchOn", typeof(Sprite)) as Sprite;
 	}
 	
@@ -20,7 +21,7 @@ public class SwitchScript : MonoBehaviour {
 	void Update () {
 
 		col = Physics2D.OverlapCircle (transform.position, affectedRadius, 1 << 8);
-		//Debug.Log (col.gameObject.name);
+		Debug.Log (triggered);
 
 		if (col != null && !triggered) {
 			if (col.gameObject.name == "ballOfLight(Clone)" ) {

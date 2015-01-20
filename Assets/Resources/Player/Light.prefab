@@ -12,8 +12,9 @@ GameObject:
   - 114: {fileID: 11400000}
   - 58: {fileID: 5800000}
   - 96: {fileID: 9600000}
+  - 114: {fileID: 11400002}
   m_Layer: 8
-  m_Name: ballOfLight
+  m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,7 +46,7 @@ Rigidbody2D:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!58 &5800000
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -77,9 +78,9 @@ TrailRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Time: 5
-  m_StartWidth: 1
-  m_EndWidth: 1
+  m_Time: .150000006
+  m_StartWidth: .5
+  m_EndWidth: .5
   m_Colors:
     m_Color[0]:
       serializedVersion: 2
@@ -96,9 +97,20 @@ TrailRenderer:
     m_Color[4]:
       serializedVersion: 2
       rgba: 16777215
-  m_MinVertexDistance: .100000001
+  m_MinVertexDistance: 9.99999975e-05
   m_Autodestruct: 0
 --- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65a7bd6bd2adba441b1461aa3ba6f11d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}

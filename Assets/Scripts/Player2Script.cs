@@ -14,7 +14,8 @@ public class Player2Script : MonoBehaviour {
 	float maxRunSpeed = 6;
 	Vector2 rightStickDirection;
 	bool ableToshootLight = false;
-	public static float speedOfLight = 250;
+    float despawnLightPoint = 2;                                                    //how far away light has to be from the edge of the screen to despawn, 1 is the edge
+	public static float speedOfLight = 100;
 	public static float lightDelay = 0;
 	float lightTimer = lightDelay;
 	int prevLightCount;
@@ -36,20 +37,16 @@ public class Player2Script : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		//LineRenderer test = GetComponent<LineRenderer>();
-
+		//controls for sprinting
 		if (Input.GetButton ("LB")) {
 			gameObject.rigidbody2D.velocity = new Vector2 (movementSpeed * Input.GetAxis ("LX"), gameObject.rigidbody2D.velocity.y);
 			if (movementSpeed<maxRunSpeed) {
 				movementSpeed+=.2f;
 			}
 		} 
-		else if (gameObject.rigidbody2D.velocity.x == 0 || !Input.GetButton ("Y")) { 
+		else if (gameObject.rigidbody2D.velocity.x == 0 || !Input.GetButton ("LB")) { 
 			movementSpeed = initialMovementSpeed;
 		}
-		
-
-
 		gameObject.rigidbody2D.velocity = new Vector2(movementSpeed * Input.GetAxis("LX"), gameObject.rigidbody2D.velocity.y);
 
 
@@ -63,64 +60,20 @@ public class Player2Script : MonoBehaviour {
 			
 		}
 
-
-
-
-
-
-
-		
-		if (lightList.Count != 0) {
-			
-			for (int i=0;i < lightList.Count;i++) {
-				
-			
-				
-				//checks if light is off the screen. If so it despawns them.
-				if (Mathf.Abs(lightList[i].transform.position.y)> Camera.main.orthographicSize || Mathf.Abs(lightList[i].transform.position.x)> Camera.main.orthographicSize * Camera.main.aspect) {
-					Destroy(lightList[i]);
-					lightList.RemoveAt(i);
-					continue;
-				}
-
-				
-				
-			}
-			
-		}
-
-
-
-
 		//controls for shooting light
-
 		rightStickDirection = new Vector2 (Input.GetAxis ("RX"), Input.GetAxis ("RY"));
-
-		//Debug.Log (roundToOne(-.8f));
 
 		if (getMagnitude (rightStickDirection) == 0) 
 		{
-			ableToshootLight= true;
+			ableToshootLight = true;
 		}
 
 		if (Input.GetAxis ("RT") > .9f && getMagnitude (rightStickDirection) > .8f && ableToshootLight) 
 		{
-			setMagnitude (1, rightStickDirection);
-
-			rightStickDirection = new Vector2(roundToOne(rightStickDirection.x) , roundToOne (rightStickDirection.y));          //roundToADirection(rightStickDirection);
-			Debug.Log (rightStickDirection.x);
-			if (Mathf.Abs(rightStickDirection.x) == 1)
-			{
-				rightStickDirection = new Vector2(rightStickDirection.x, 0);
-			}
-			else if (Mathf.Abs(rightStickDirection.y) == 1)
-			{
-				rightStickDirection = new Vector2(0,rightStickDirection.y);
-			}
-			GameObject prefab = (GameObject)Resources.Load ("Player/ballOfLight");
+			rightStickDirection = setMagnitude (1, rightStickDirection);
+           	GameObject prefab = (GameObject)Resources.Load ("Player/Light");
 			GameObject light = (GameObject)Instantiate (prefab,transform.position, Quaternion.identity);
-
-			light.rigidbody2D.velocity = setMagnitude(speedOfLight, rightStickDirection);
+            light.rigidbody2D.velocity = setMagnitude(speedOfLight, rightStickDirection);
 			lightList.Add (light);
 			ableToshootLight = false;
 		}
