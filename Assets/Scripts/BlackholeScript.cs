@@ -7,7 +7,7 @@ public class BlackholeScript : MonoBehaviour {
 	Vector2 forceOnLight;
 	Vector2 resultVelocity;
 	Collider2D[] col; 
-	float blackholeStrength = 5;
+	float blackholeStrength = 4.5f;
 	Vector2 lightForce;
 	float radiusOfAffectedArea = 20;
 	float speedOfLight;   // Player2Script.speedOfLight;

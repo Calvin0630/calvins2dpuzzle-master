@@ -30,7 +30,6 @@ public class LightScript : MonoBehaviour
 
         if (timer <= 0)
         {
-            Debug.Log(transform.position);
             Destroy(gameObject);
         }
     }
@@ -44,10 +43,7 @@ public class LightScript : MonoBehaviour
             timer = trailCatchUpTime;
             hitWall = true;
             
-            /**
-            Destroy(gameObject);
-            Debug.Log("It worked");
-             */
+           
         }
 	}
 }

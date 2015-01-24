@@ -21,10 +21,15 @@ public class SwitchScript : MonoBehaviour {
 	void Update () {
 
 		col = Physics2D.OverlapCircle (transform.position, affectedRadius, 1 << 8);
-		Debug.Log (triggered);
+		
+        
+        if (col != null)
+        {
+            Debug.Log(col.gameObject.name);
+        }
 
 		if (col != null && !triggered) {
-			if (col.gameObject.name == "ballOfLight(Clone)" ) {
+			if (col.gameObject.name == "Light(Clone)" ) {
 				gameObject.GetComponent<SpriteRenderer> ().sprite = on;
 				GameObject clone = (GameObject)Instantiate ((GameObject)Resources.Load ("Environment/door"), new Vector3(20f,-8.5f,0f), Quaternion.identity);
 				triggered = true;
