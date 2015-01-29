@@ -20,13 +20,7 @@ public class SwitchScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		col = Physics2D.OverlapCircle (transform.position, affectedRadius, 1 << 8);
-		
-        
-        if (col != null)
-        {
-            Debug.Log(col.gameObject.name);
-        }
+        col = Physics2D.OverlapCircle(transform.position, affectedRadius, 1 << 8);
 
 		if (col != null && !triggered) {
 			if (col.gameObject.name == "Light(Clone)" ) {

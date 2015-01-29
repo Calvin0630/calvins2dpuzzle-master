@@ -14,29 +14,10 @@ public class Button_Level2 : MonoBehaviour
     void Start()
     {
         topOfButton = new Vector2(transform.position.x, transform.position.y + transform.lossyScale.y / 2 + .01f);
-        sizeOfOverlap = new Vector2(transform.lossyScale.x - .5f, .5f);
+        sizeOfOverlap = new Vector2(transform.lossyScale.x/2 - 1, .5f);
 
-        GameObject[] allObjects = (GameObject[]) GameObject.FindSceneObjectsOfType(typeof(GameObject));
-        /**
-        foreach (GameObject thing in allObjects)
-        {
-            if (thing.name == "tile1");
-            {
-                tile = thing;
-                break;
-            }
-        }
-        */
+        tile = GameObject.Find("tile1");
 
-        for (int i=0;i > allObjects.Length;i++)
-        {
-            Debug.Log(allObjects[i].name);
-            if (allObjects[i].name == "tile1");
-            {
-                tile = allObjects[i];
-                break;
-            }
-        }
 
     }
 
@@ -46,11 +27,9 @@ public class Button_Level2 : MonoBehaviour
 
         col = Physics2D.OverlapArea(topOfButton + sizeOfOverlap, topOfButton - sizeOfOverlap, 1 << 10);
 
-        Debug.Log(allObjects.Length);
-
         if (col != null)
         {
-            //Destroy(tile);
+            Destroy(tile);
             //do something
             Debug.Log("nnnnnnnnnnnnnnnnnn");
 
