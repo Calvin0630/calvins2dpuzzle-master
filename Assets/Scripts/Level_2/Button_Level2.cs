@@ -7,7 +7,8 @@ public class Button_Level2 : MonoBehaviour
     Vector2 topOfButton;
     Vector2 sizeOfOverlap;
     GameObject thing;
-    GameObject tile;
+    GameObject tile1;
+    GameObject tile2;
     GameObject[] allObjects;
 
     // Use this for initialization
@@ -16,9 +17,8 @@ public class Button_Level2 : MonoBehaviour
         topOfButton = new Vector2(transform.position.x, transform.position.y + transform.lossyScale.y / 2 + .01f);
         sizeOfOverlap = new Vector2(transform.lossyScale.x/2 - 1, .5f);
 
-        tile = GameObject.Find("tile1");
-
-
+        tile1 = GameObject.Find("tile1");
+        tile2 = GameObject.Find("tile2");
     }
 
     // Update is called once per frame
@@ -29,7 +29,8 @@ public class Button_Level2 : MonoBehaviour
 
         if (col != null)
         {
-            Destroy(tile);
+            Destroy(tile1);
+            Destroy(tile2);
             //do something
             Debug.Log("nnnnnnnnnnnnnnnnnn");
 
