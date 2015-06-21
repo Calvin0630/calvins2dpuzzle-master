@@ -25,9 +25,9 @@ public class BlackholeScript : MonoBehaviour {
 
 			lightToBlackhole = getVectorFromAToB (col[i].gameObject.transform.position, transform.position);
 			forceOnLight = ( blackholeStrength * (radiusOfAffectedArea/(getMagnitude(lightToBlackhole)*getMagnitude(lightToBlackhole)) * lightToBlackhole));
-			resultVelocity = new Vector2( col[i].gameObject.rigidbody2D.velocity.x + forceOnLight.x , col[i].gameObject.rigidbody2D.velocity.y + forceOnLight.y );
+			resultVelocity = new Vector2( col[i].gameObject.GetComponent<Rigidbody2D>().velocity.x + forceOnLight.x , col[i].gameObject.GetComponent<Rigidbody2D>().velocity.y + forceOnLight.y );
             resultVelocity = setMagnitude(speedOfLight, resultVelocity);
-			col[i].gameObject.rigidbody2D.velocity = resultVelocity;
+			col[i].gameObject.GetComponent<Rigidbody2D>().velocity = resultVelocity;
 
 
 		}

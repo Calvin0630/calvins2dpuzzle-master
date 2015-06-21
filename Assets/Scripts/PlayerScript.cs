@@ -25,21 +25,21 @@ public class PlayerScript : MonoBehaviour {
 
 		//left and right movement
 		if (Input.GetKey (KeyCode.A)) {
-			gameObject.rigidbody2D.velocity = new Vector2(-movementSpeed , rigidbody2D.velocity.y);
+			gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(-movementSpeed , GetComponent<Rigidbody2D>().velocity.y);
 			transform.localScale = new Vector3 (-7, 7, 1);
 		} 
 		else if (Input.GetKey (KeyCode.D)) {
-			gameObject.rigidbody2D.velocity = new Vector2(movementSpeed , rigidbody2D.velocity.y);
+			gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(movementSpeed , GetComponent<Rigidbody2D>().velocity.y);
 			transform.localScale = new Vector3 (7, 7, 1);
 		}
-        else { gameObject.rigidbody2D.velocity = new Vector2(0, gameObject.rigidbody2D.velocity.y); }
+        else { gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, gameObject.GetComponent<Rigidbody2D>().velocity.y); }
 
 
         // controls for sprinting
 		if (Input.GetKey (KeyCode.LeftShift) && movementSpeed < maxRunSpeed) {
 			movementSpeed+=.2f;
 		} 
-		else if (gameObject.rigidbody2D.velocity.x == 0 || !Input.GetKey (KeyCode.LeftShift)) { 
+		else if (gameObject.GetComponent<Rigidbody2D>().velocity.x == 0 || !Input.GetKey (KeyCode.LeftShift)) { 
 			movementSpeed = initialMovementSpeed;
 		}
 
@@ -48,7 +48,7 @@ public class PlayerScript : MonoBehaviour {
 		//controls for jumping
 		if (Input.GetKeyDown (KeyCode.W) && !jumping2) {
 			//gameObject.rigidbody2D.AddForce (new Vector2 (0, 256.0f));
-			gameObject.rigidbody2D.velocity = new Vector2(gameObject.rigidbody2D.velocity.x, jumpStrength);
+			gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(gameObject.GetComponent<Rigidbody2D>().velocity.x, jumpStrength);
 			if (jumping1) {
 				jumping2 = true;
 			}

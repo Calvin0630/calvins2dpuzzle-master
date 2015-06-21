@@ -48,23 +48,23 @@ public class Player2Script : MonoBehaviour
         //controls for sprinting
         if (Input.GetButton("LB"))
         {
-            gameObject.rigidbody2D.velocity = new Vector2(movementSpeed * Input.GetAxis("LX"), gameObject.rigidbody2D.velocity.y);
+            gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(movementSpeed * Input.GetAxis("LX"), gameObject.GetComponent<Rigidbody2D>().velocity.y);
             if (movementSpeed < maxRunSpeed)
             {
                 movementSpeed += .2f;
             }
         }
-        else if (gameObject.rigidbody2D.velocity.x == 0 || !Input.GetButton("LB"))
+        else if (gameObject.GetComponent<Rigidbody2D>().velocity.x == 0 || !Input.GetButton("LB"))
         {
             movementSpeed = initialMovementSpeed;
         }
-        gameObject.rigidbody2D.velocity = new Vector2(movementSpeed * Input.GetAxis("LX"), gameObject.rigidbody2D.velocity.y);
+        gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(movementSpeed * Input.GetAxis("LX"), gameObject.GetComponent<Rigidbody2D>().velocity.y);
 
 
         //controls for jumping
         if (Input.GetButtonDown("A") && !jumping2)
         {
-            gameObject.rigidbody2D.velocity = new Vector2(gameObject.rigidbody2D.velocity.x, jumpStrength);
+            gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(gameObject.GetComponent<Rigidbody2D>().velocity.x, jumpStrength);
             if (jumping1)
             {
                 jumping2 = true;
@@ -98,7 +98,7 @@ public class Player2Script : MonoBehaviour
             rightStickDirection = setMagnitude(1, rightStickDirection);
             GameObject prefab = (GameObject)Resources.Load("Player/Light");
             GameObject light = (GameObject)Instantiate(prefab, transform.position, Quaternion.identity);
-            light.rigidbody2D.velocity = setMagnitude(speedOfLight, rightStickDirection);
+            light.GetComponent<Rigidbody2D>().velocity = setMagnitude(speedOfLight, rightStickDirection);
             lightList.Add(light);
             ableToshootLight = false;
         }

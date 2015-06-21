@@ -39,7 +39,7 @@ public class LightScript : MonoBehaviour
 	{
         if (col.gameObject.layer == 9)
         {
-            gameObject.rigidbody2D.velocity = Vector2.zero;
+            gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             timer = trailCatchUpTime;
             hitWall = true;
             
